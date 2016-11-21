@@ -11,7 +11,7 @@ using Aspose.Words.Drawing;
 using System.Drawing.Imaging;
 using Aspose.Words.Tables;
 
-namespace CSharp.Rendering_and_Printing
+namespace Aspose.Words.Examples.CSharp.Rendering_and_Printing
 {
     class RenderShape
     {
@@ -87,7 +87,7 @@ namespace CSharp.Rendering_and_Printing
 
             // Rotating the shape may result in clipping as the image canvas is too small. Find the longest side
             // and make sure that the graphics canvas is large enough to compensate for this.
-            int maxSide = Math.Max(shapeSizeInPixels.Width, shapeSizeInPixels.Height);
+            int maxSide = System.Math.Max(shapeSizeInPixels.Width, shapeSizeInPixels.Height);
 
             using (Bitmap image = new Bitmap((int)(maxSide * 1.25), (int)(maxSide * 1.25)))
             {
@@ -239,7 +239,7 @@ namespace CSharp.Rendering_and_Printing
             renderer.Save(stream, imageOptions);
             shape.Remove();
 
-            Rectangle crop = renderer.GetOpaqueRectangleInPixels(imageOptions.Scale, imageOptions.Resolution);
+            Rectangle crop = renderer.GetOpaqueBoundsInPixels(imageOptions.Scale, imageOptions.Resolution);
 
             // Load the image into a new bitmap.
             using (Bitmap renderedImage = new Bitmap(stream))
@@ -276,10 +276,10 @@ namespace CSharp.Rendering_and_Printing
                     // For each pixel that is not transparent calculate the bounding box around it.
                     if (pixelColor.ToArgb() != Color.Empty.ToArgb())
                     {
-                        min.X = Math.Min(x, min.X);
-                        min.Y = Math.Min(y, min.Y);
-                        max.X = Math.Max(x, max.X);
-                        max.Y = Math.Max(y, max.Y);
+                        min.X = System.Math.Min(x, min.X);
+                        min.Y = System.Math.Min(y, min.Y);
+                        max.X = System.Math.Max(x, max.X);
+                        max.Y = System.Math.Max(y, max.Y);
                     }
                 }
             }

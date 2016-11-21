@@ -6,7 +6,7 @@ using Aspose.Words.Fonts;
 using Aspose.Words;
 using System.Collections;
 
-namespace CSharp.Rendering_and_Printing
+namespace Aspose.Words.Examples.CSharp.Rendering_and_Printing
 {
     class SetFontsFoldersSystemAndCustomFolder
     {
@@ -34,6 +34,8 @@ namespace CSharp.Rendering_and_Printing
             
             // Apply the new set of font sources to use.
             FontSettings.SetFontsSources(updatedFontSources);
+            // Set font settings
+            doc.FontSettings = FontSettings;
             dataDir = dataDir + "Rendering.SetFontsFolders_out_.pdf";
             doc.Save(dataDir);
             //ExEnd:SetFontsFoldersSystemAndCustomFolder 

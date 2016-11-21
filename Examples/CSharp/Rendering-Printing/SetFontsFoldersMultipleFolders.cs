@@ -6,7 +6,7 @@ using Aspose.Words.Fonts;
 using Aspose.Words;
 using Aspose.Words.Saving;
 
-namespace CSharp.Rendering_and_Printing
+namespace Aspose.Words.Examples.CSharp.Rendering_and_Printing
 {
     class SetFontsFoldersMultipleFolders
     {
@@ -23,6 +23,8 @@ namespace CSharp.Rendering_and_Printing
             // fonts when rendering or embedding fonts. To add an extra font source while keeping system font sources then use both FontSettings.GetFontSources and
             // FontSettings.SetFontSources instead.
             FontSettings.SetFontsFolders(new string[] { @"C:\MyFonts\", @"D:\Misc\Fonts\" }, true);
+            // Set font settings
+            doc.FontSettings = FontSettings;
             dataDir = dataDir + "Rendering.SetFontsFolders_out_.pdf";
             doc.Save(dataDir);
             //ExEnd:SetFontsFoldersMultipleFolders           

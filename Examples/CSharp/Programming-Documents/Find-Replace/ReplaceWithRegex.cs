@@ -4,8 +4,9 @@ using System.Text.RegularExpressions;
 using Aspose.Words;
 using Aspose.Words.Fields;
 using System;
+using Aspose.Words.Replacing;
 
-namespace CSharp.Programming_Documents.Find_and_Replace
+namespace Aspose.Words.Examples.CSharp.Programming_Documents.Find_and_Replace
 {
     class ReplaceWithRegex
     {
@@ -16,7 +17,10 @@ namespace CSharp.Programming_Documents.Find_and_Replace
             string dataDir = RunExamples.GetDataDir_FindAndReplace();
 
             Document doc = new Document(dataDir + "Document.doc");
-            doc.Range.Replace(new Regex("[s|m]ad"), "bad");
+
+            FindReplaceOptions options = new FindReplaceOptions();
+
+            doc.Range.Replace(new Regex("[s|m]ad"), "bad", options);
 
             dataDir = dataDir + "ReplaceWithRegex_out_.doc";
             doc.Save(dataDir);

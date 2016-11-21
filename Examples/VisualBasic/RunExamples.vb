@@ -1,13 +1,14 @@
 ﻿Imports System.IO
-Imports DocumentExplorerExample
-Imports LINQ
+Imports Aspose.Words.Examples.VisualBasic.DocumentExplorerExample
+Imports Aspose.Words.Examples.VisualBasic.LINQ
 
 Module RunExamples
 
     Sub Main()
-        Console.WriteLine("Open RunExamples.vb. In Main() method, Un-comment the example that you want to run")
+        Console.WriteLine("Open RunExamples.vb. " & vbLf & "In Main() method uncomment the example that you want to run.")
         Console.WriteLine("=====================================================")
 
+        ' Uncomment the one you want to try out
 
         '' =====================================================
         '' =====================================================
@@ -124,8 +125,8 @@ Module RunExamples
         'ExtractContent.Run()
         'PageNumbersOfNodes.Run()
         'RemoveBreaks.Run()
-        'CloningDocument.Run();
-        'ProtectDocument.Run();
+        'CloningDocument.Run()
+        'ProtectDocument.Run()
         'AccessStyles.Run()
         'GetVariables.Run()
         'SetViewOption.Run()
@@ -166,7 +167,7 @@ Module RunExamples
         'ChangeLocale.Run()
         'UpdateDocFields.Run()
         'InsertField.Run()
-        'InsertMergeFieldUsingDOM.Run();
+        'InsertMergeFieldUsingDOM.Run()
         'InsertMailMergeAddressBlockFieldUsingDOM.Run()
         'InsertAdvanceFieldWithOutDocumentBuilder.Run()
         'InsertASKFieldWithOutDocumentBuilder.Run()
@@ -252,7 +253,7 @@ Module RunExamples
         'ProduceMultipleDocuments.Run()
         'MailMergeUsingMustacheSyntax.Run()
         'ExecuteWithRegionsDataTable.Run()
-        NestedMailMergeCustom.Run()
+        'NestedMailMergeCustom.Run()
 
         '' =====================================================
         '' =====================================================
@@ -277,14 +278,6 @@ Module RunExamples
         'HyphenateWordsOfLanguages.Run()
         'LoadHyphenationDictionaryForLanguage.Run()
         'PrintProgressDialog.Run()
-
-        '' =====================================================
-        '' =====================================================
-        '' Viewers and Visualizers
-        '' =====================================================
-        '' =====================================================
-
-        'MainForm.Run()
 
         '' =====================================================
         '' =====================================================

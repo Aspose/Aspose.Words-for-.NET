@@ -3,7 +3,9 @@ using Aspose.Words;
 using System;
 using Aspose.Words.MailMerging;
 using System.Text.RegularExpressions;
-namespace CSharp.Programming_Documents.Working_With_Document
+using Aspose.Words.Replacing;
+
+namespace Aspose.Words.Examples.CSharp.Programming_Documents.Working_With_Document
 {
     class InsertDoc
     {
@@ -20,7 +22,11 @@ namespace CSharp.Programming_Documents.Working_With_Document
         {
             //ExStart:InsertDocumentAtReplace
             Document mainDoc = new Document(dataDir + "InsertDocument1.doc");
-            mainDoc.Range.Replace(new Regex("\\[MY_DOCUMENT\\]"), new InsertDocumentAtReplaceHandler(), false);
+
+            FindReplaceOptions options = new FindReplaceOptions();
+            options.ReplacingCallback = new InsertDocumentAtReplaceHandler();
+
+            mainDoc.Range.Replace(new Regex("\\[MY_DOCUMENT\\]"),"" , options);
             dataDir = dataDir + "InsertDocumentAtReplace_out_.doc";
             mainDoc.Save(dataDir);
             //ExEnd:InsertDocumentAtReplace
@@ -175,7 +181,7 @@ namespace CSharp.Programming_Documents.Working_With_Document
                     builder.MoveToMergeField(e.DocumentFieldName);
 
                     // The name of the document to load and insert is stored in the field value.
-                    Aspose.Words.Document subDoc = new Aspose.Words.Document((string)e.FieldValue);
+                    Document subDoc = new Document((string)e.FieldValue);
 
                     // Insert the document.
                     InsertDocument(builder.CurrentParagraph, subDoc);

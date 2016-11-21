@@ -121,8 +121,8 @@ Namespace DocumentExplorerExample
 
 		Private Sub UpdatePage()
 			' This operation can take some time (for the first page) so we set the Cursor to WaitCursor.
-			Dim cursor As Cursor = Me.Cursor.Current
-			Me.Cursor.Current = Cursors.WaitCursor
+            Dim cursor As Cursor = Me.Cursor
+            Me.Cursor = Cursors.WaitCursor
 
 			Dim canMoveBack As Boolean = (mPageNumber > 1)
 			navigationFirstPageMenuItem.Enabled = canMoveBack
@@ -149,14 +149,14 @@ Namespace DocumentExplorerExample
 				mDocument.RenderToScale(pageIndex, gfx, 0, 0, scale)
 			End Using
 
-			docPagePictureBox.Width = Math.Max(img.Width + 100, SystemInformation.WorkingArea.Width - SystemInformation.VerticalScrollBarWidth)
+            docPagePictureBox.Width = System.Math.Max(img.Width + 100, SystemInformation.WorkingArea.Width - SystemInformation.VerticalScrollBarWidth)
 			docPagePictureBox.Height = img.Height + 100
 			docPagePictureBox.Image = img
 
 			statusBar.Text = String.Format("Page {0} of {1}", mPageNumber, mDocument.PageCount)
 
 			' Restore cursor.
-			Me.Cursor.Current = cursor
+            Me.Cursor = cursor
 		End Sub
 
 		#Region "Windows Form Designer generated code"

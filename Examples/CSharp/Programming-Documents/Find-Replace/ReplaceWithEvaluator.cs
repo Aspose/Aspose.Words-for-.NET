@@ -5,7 +5,8 @@ using System.Drawing;
 using System.IO;
 using System.Reflection;
 using Aspose.Words;
-namespace CSharp.Programming_Documents.Find_and_Replace
+using Aspose.Words.Replacing;
+namespace Aspose.Words.Examples.CSharp.Programming_Documents.Find_and_Replace
 {
     class ReplaceWithEvaluator
     {
@@ -15,7 +16,11 @@ namespace CSharp.Programming_Documents.Find_and_Replace
             // The path to the documents directory.
             string dataDir = RunExamples.GetDataDir_FindAndReplace();
             Document doc = new Document(dataDir + "Range.ReplaceWithEvaluator.doc");
-            doc.Range.Replace(new Regex("[s|m]ad"), new MyReplaceEvaluator(), true);
+
+            FindReplaceOptions options = new FindReplaceOptions();   
+            options.ReplacingCallback = new MyReplaceEvaluator();
+
+            doc.Range.Replace(new Regex("[s|m]ad"), "", options);
 
             dataDir = dataDir + "Range.ReplaceWithEvaluator_out_.doc";
             doc.Save(dataDir);

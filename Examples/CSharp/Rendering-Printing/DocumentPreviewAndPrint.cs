@@ -7,9 +7,9 @@ using System.Windows.Forms;
 using Aspose.Words;
 using Aspose.Words.Rendering;
 
-namespace CSharp.Rendering_and_Printing
+namespace Aspose.Words.Examples.CSharp.Rendering_and_Printing
 {
-    //ExStart:ActivePrintPreviewDialog
+    //ExStart:ActivePrintPreviewDialogClass 
     class ActivePrintPreviewDialog : PrintPreviewDialog
     {
         /// <summary>
@@ -22,7 +22,7 @@ namespace CSharp.Rendering_and_Printing
         }
 
     }
-    //ExEnd:ActivePrintPreviewDialog
+    //ExEnd:ActivePrintPreviewDialogClass
 
     /// <summary>
     /// This project is set to target the x86 platform because the .NET print dialog does not 

@@ -75,7 +75,7 @@ Public Class RenderShape
 
         ' Rotating the shape may result in clipping as the image canvas is too small. Find the longest side
         ' and make sure that the graphics canvas is large enough to compensate for this.
-        Dim maxSide As Integer = Math.Max(shapeSizeInPixels.Width, shapeSizeInPixels.Height)
+        Dim maxSide As Integer = System.Math.Max(shapeSizeInPixels.Width, shapeSizeInPixels.Height)
 
         Using image As New Bitmap(CInt(Fix(maxSide * 1.25)), CInt(Fix(maxSide * 1.25)))
             ' Rendering to a graphics object means we can specify settings and transformations to be applied to 
@@ -218,7 +218,7 @@ Public Class RenderShape
         renderer.Save(stream, imageOptions)
         shape.Remove()
 
-        Dim crop As Rectangle = renderer.GetOpaqueRectangleInPixels(imageOptions.Scale, imageOptions.Resolution)
+        Dim crop As Rectangle = renderer.GetOpaqueBoundsInPixels(imageOptions.Scale, imageOptions.Resolution)
 
         ' Load the image into a new bitmap.
         Using renderedImage As Bitmap = New Bitmap(stream)
@@ -249,10 +249,10 @@ Public Class RenderShape
 
                 ' For each pixel that is not transparent calculate the bounding box around it.
                 If pixelColor.ToArgb() <> Color.Empty.ToArgb() Then
-                    min.X = Math.Min(x, min.X)
-                    min.Y = Math.Min(y, min.Y)
-                    max.X = Math.Max(x, max.X)
-                    max.Y = Math.Max(y, max.Y)
+                    min.X = System.Math.Min(x, min.X)
+                    min.Y = System.Math.Min(y, min.Y)
+                    max.X = System.Math.Max(x, max.X)
+                    max.Y = System.Math.Max(y, max.Y)
                 End If
             Next y
         Next x
