@@ -1,0 +1,162 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net48;net10.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Platforms>AnyCPU</Platforms>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <EnableDefaultItems>false</EnableDefaultItems>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ApiExampleBase.cs" />
+    <Compile Include="ExBookmarksOutlineLevelCollection.cs" />
+    <Compile Include="ExComHelper.cs" />
+    <Compile Include="CustomBarcodeGenerator.cs" />
+    <Compile Include="DocumentHelper.cs" />
+    <Compile Include="ExAbsolutePositionTab.cs" />
+    <Compile Include="ExBookmarks.cs" />
+    <Compile Include="ExBorder.cs" />
+    <Compile Include="ExBorderCollection.cs" />
+    <Compile Include="ExBuildingBlocks.cs" />
+    <Compile Include="ExBuildVersion.cs" />
+    <Compile Include="ExCellFormat.cs" />
+    <Compile Include="ExCharts.cs" />
+    <Compile Include="ExChmLoadOptions.cs" />
+    <Compile Include="ExComment.cs" />
+    <Compile Include="ExCompatibilityOptions.cs" />
+    <Compile Include="ExControlChar.cs" />
+    <Compile Include="ExDocSaveOptions.cs" />
+    <Compile Include="ExFieldOptions.cs" />
+    <Compile Include="ExHtmlLoadOptions.cs" />
+    <Compile Include="ExDigitalSignatureCollection.cs" />
+    <Compile Include="ExDigitalSignatureUtil.cs" />
+    <Compile Include="ExDocument.cs" />
+    <Compile Include="ExDocumentBase.cs" />
+    <Compile Include="ExDocumentBuilder.cs" />
+    <Compile Include="ExDocumentBuilderImages.cs" />
+    <Compile Include="ExDrawing.cs" />
+    <Compile Include="ExEditableRange.cs" />
+    <Compile Include="ExField.cs" />
+    <Compile Include="ExFile.cs" />
+    <Compile Include="ExFont.cs" />
+    <Compile Include="ExFormFields.cs" />
+    <Compile Include="ExHeaderFooter.cs" />
+    <Compile Include="ExHtmlFixedSaveOptions.cs" />
+    <Compile Include="ExHtmlSaveOptions.cs" />
+    <Compile Include="ExHyphenation.cs" />
+    <Compile Include="ExImage.cs" />
+    <Compile Include="ExImageSaveOptions.cs" />
+    <Compile Include="ExInline.cs" />
+    <Compile Include="ExInlineStory.cs" />
+    <Compile Include="ExNodeImporter.cs" />
+    <Compile Include="ExLists.cs" />
+    <Compile Include="ExMailMerge.cs" />
+    <Compile Include="ExMailMergeCustom.cs" />
+    <Compile Include="ExMailMergeEvent.cs" />
+    <Compile Include="ExMarkdownLoadOptions.cs" />
+    <Compile Include="ExMarkdownSaveOptions.cs" />
+    <Compile Include="ExMetered.cs" />
+    <Compile Include="ExMossDoc2Pdf.cs" />
+    <Compile Include="ExMossRtf2Docx.cs" />
+    <Compile Include="ExNode.cs" />
+    <Compile Include="ExOdtSaveOptions.cs" />
+    <Compile Include="ExOoxmlSaveOptions.cs" />
+    <Compile Include="ExPageSetup.cs" />
+    <Compile Include="ExParagraph.cs" />
+    <Compile Include="ExPclSaveOptions.cs" />
+    <Compile Include="ExPdfSaveOptions.cs" />
+    <Compile Include="ExDocumentProperties.cs" />
+    <Compile Include="ExRange.cs" />
+    <Compile Include="ExRenameMergeFields.cs" />
+    <Compile Include="ExRendering.cs" />
+    <Compile Include="ExReplaceHyperlinks.cs" />
+    <Compile Include="ExReportingEngine.cs" />
+    <Compile Include="ExRtfSaveOptions.cs" />
+    <Compile Include="ExSavingCallback.cs" />
+    <Compile Include="ExSection.cs" />
+    <Compile Include="ExShape.cs" />
+    <Compile Include="ExSignDocumentCustom.cs" />
+    <Compile Include="ExStructuredDocumentTag.cs" />
+    <Compile Include="ExStyles.cs" />
+    <Compile Include="ExTable.cs" />
+    <Compile Include="ExTableColumn.cs" />
+    <Compile Include="ExTabStop.cs" />
+    <Compile Include="ExRtfLoadOptions.cs" />
+    <Compile Include="ExThemes.cs" />
+    <Compile Include="ExTxtLoadOptions.cs" />
+    <Compile Include="ExTxtSaveOptions.cs" />
+    <Compile Include="ExUtilityClasses.cs" />
+    <Compile Include="ExVariableCollection.cs" />
+    <Compile Include="ExDocumentVisitor.cs" />
+    <Compile Include="ExViewOptions.cs" />
+    <Compile Include="ExXamlFixedSaveOptions.cs" />
+    <Compile Include="ExXamlFlowSaveOptions.cs" />
+    <Compile Include="ExXpsSaveOptions.cs" />
+    <Compile Include="ExSvgSaveOptions.cs" />
+    <Compile Include="ExPsSaveOptions.cs" />
+    <Compile Include="PrintTracker.cs" />
+    <Compile Include="TestData\TestBuilders\ColorItemTestBuilder.cs" />
+    <Compile Include="TestData\TestBuilders\DocumentTestBuilder.cs" />
+    <Compile Include="TestData\TestBuilders\ImageTestBuilder.cs" />
+    <Compile Include="TestData\TestBuilders\NumericTestBuilder.cs" />
+    <Compile Include="TestData\Common.cs" />
+    <Compile Include="TestData\TestClasses\ClientTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ColorItemTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ContractTestClass.cs" />
+    <Compile Include="TestData\TestClasses\DocumentTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ImageTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ManagerTestClass.cs" />
+    <Compile Include="TestData\TestClasses\MessageTestClass.cs" />
+    <Compile Include="TestData\TestClasses\NumericTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ShareQuoteTestClass.cs" />
+    <Compile Include="TestData\TestClasses\ShareTestClass.cs" />
+    <Compile Include="TestUtil.cs" />
+    <Compile Include="ExCertificateHolder.cs" />
+    <Compile Include="ExCleanupOptions.cs" />
+    <Compile Include="ExFontSettings.cs" />
+    <Compile Include="ExLayout.cs" />
+    <Compile Include="ExLicense.cs" />
+    <Compile Include="ExLoadOptions.cs" />
+    <Compile Include="ExMailMergeCustomNested.cs" />
+    <Compile Include="ExParagraphFormat.cs" />
+    <Compile Include="ExPdfLoadOptions.cs" />
+    <Compile Include="ExPlainTextDocument.cs" />
+    <Compile Include="ExRevision.cs" />
+    <Compile Include="ExSmartTag.cs" />
+    <Compile Include="ExVbaProject.cs" />
+    <Compile Include="ExWordML2003SaveOptions.cs" />
+    <Compile Include="ExXlsxSaveOptions.cs" />
+    <Compile Include="ExLowCode.cs" />
+    <Compile Include="ExAI.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspose.BarCode" Version="26.7.0" />
+    <PackageReference Include="Aspose.Page" Version="26.7.0" />
+    <PackageReference Include="Aspose.PDF" Version="26.7.0" />
+    <PackageReference Include="Aspose.Words" Version="26.7.0" />
+    <PackageReference Include="Aspose.Words.Shaping.HarfBuzz" Version="26.7.0" />
+    <PackageReference Include="BouncyCastle.Cryptography" Version="2.6.2" />
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="10.0.10" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.8.1" />
+    <PackageReference Include="NUnit" Version="4.6.1" />
+    <PackageReference Include="NUnit3TestAdapter" Version="6.2.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="SkiaSharp" Version="4.150.1" />
+    <PackageReference Include="System.IO.Compression" Version="4.3.0" Condition="'$(TargetFramework)' == 'net48'" />
+    <PackageReference Include="System.Runtime.InteropServices.RuntimeInformation" Version="4.3.0" Condition="'$(TargetFramework)' == 'net48'" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Interop.ADODB">
+      <HintPath>..\..\Data\Dlls\Interop.ADODB.dll</HintPath>
+    </Reference>    
+    <Reference Include="System.Web" Condition="$(TargetFramework.StartsWith('net4'))" />
+    <Reference Include="System.Windows.Forms" Condition="$(TargetFramework.StartsWith('net4'))" />
+  </ItemGroup>
+
+</Project>

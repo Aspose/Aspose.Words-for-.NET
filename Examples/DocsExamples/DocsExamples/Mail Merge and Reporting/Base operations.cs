@@ -1,0 +1,291 @@
+﻿using System.Collections.Generic;
+using System.Data;
+using Microsoft.Data.Sqlite;
+using Aspose.Words;
+using Aspose.Words.MailMerging;
+using NUnit.Framework;
+
+namespace DocsExamples.Mail_Merge_and_Reporting
+{
+    public class BaseOperations : DocsExamplesBase
+    {
+        [Test]
+        public void SimpleMailMerge()
+        {
+            //ExStart:ExecuteSimpleMailMerge
+            //GistId:341b834e9b6a84ac6885e907e0ea4229
+            // Include the code for our template.
+            Document doc = new Document();
+            DocumentBuilder builder = new DocumentBuilder(doc);
+
+            // Create Merge Fields.
+            builder.InsertField(" MERGEFIELD CustomerName ");
+            builder.InsertParagraph();
+            builder.InsertField(" MERGEFIELD Item ");
+            builder.InsertParagraph();
+            builder.InsertField(" MERGEFIELD Quantity ");
+
+            // Fill the fields in the document with user data.
+            doc.MailMerge.Execute(new string[] { "CustomerName", "Item", "Quantity" },
+                new object[] { "John Doe", "Hawaiian", "2" });
+
+            doc.Save(ArtifactsDir + "BaseOperations.SimpleMailMerge.docx");
+            //ExEnd:ExecuteSimpleMailMerge
+        }
+
+        [Test]
+        public void UseIfElseMustache()
+        {
+            //ExStart:UseIfElseMustache
+            //GistId:544788f602e697802e313a641cedb9b8
+            Document doc = new Document(MyDir + "Mail merge destinations - Mustache syntax.docx");
+
+            doc.MailMerge.UseNonMergeFields = true;
+            doc.MailMerge.Execute(new[] { "GENDER" }, new object[] { "MALE" });
+
+            doc.Save(ArtifactsDir + "BaseOperations.IfElseMustache.docx");
+            //ExEnd:UseIfElseMustache
+        }
+
+        [Test]
+        public void MustacheSyntaxUsingDataTable()
+        {
+            //ExStart:MustacheSyntaxUsingDataTable
+            //GistId:544788f602e697802e313a641cedb9b8
+            Document doc = new Document(MyDir + "Mail merge destinations - Vendor.docx");
+
+            // Loop through each row and fill it with data.
+            DataTable dataTable = new DataTable("list");
+            dataTable.Columns.Add("Number");
+            for (int i = 0; i < 10; i++)
+            {
+                DataRow dataRow = dataTable.NewRow();
+                dataTable.Rows.Add(dataRow);
+                dataRow[0] = "Number " + i;
+            }
+
+            // Activate performing a mail merge operation into additional field types.
+            doc.MailMerge.UseNonMergeFields = true;
+
+            doc.MailMerge.ExecuteWithRegions(dataTable);
+
+            doc.Save(ArtifactsDir + "WorkingWithXmlData.MustacheSyntaxUsingDataTable.docx");
+            //ExEnd:MustacheSyntaxUsingDataTable
+        }
+
+        [Test, Category("IgnoreOnJenkins")]
+        public void ExecuteWithRegionsDataTable()
+        {
+            //ExStart:ExecuteWithRegionsDataTable
+            //GistId:de5e13f5d5bb7d8cb88da900b4f9ed8b
+            Document doc = new Document();
+            DocumentBuilder builder = new DocumentBuilder(doc);
+
+            // Build a template with two mail merge regions: "Suppliers" and "Products".
+            builder.InsertField(" MERGEFIELD TableStart:Suppliers");
+            builder.Write("Company: ");
+            builder.InsertField(" MERGEFIELD CompanyName");
+            builder.Write(", Contact: ");
+            builder.InsertField(" MERGEFIELD ContactName");
+            builder.InsertField(" MERGEFIELD TableEnd:Suppliers");
+            builder.InsertParagraph();
+            builder.InsertField(" MERGEFIELD TableStart:Products");
+            builder.Write("Product: ");
+            builder.InsertField(" MERGEFIELD ProductName");
+            builder.Write(", Price: ");
+            builder.InsertField(" MERGEFIELD UnitPrice");
+            builder.InsertField(" MERGEFIELD TableEnd:Products");
+
+            // Use DataTable as a data source.
+            DataTable suppliersTable = GetTestSuppliers();
+            doc.MailMerge.ExecuteWithRegions(suppliersTable);
+
+            // Instead of using DataTable, you can create a DataView for custom sort or filter and then mail merge.
+            DataView productsView = new DataView(GetTestProducts());
+            productsView.Sort = "UnitPrice DESC";
+
+            // Execute the mail merge operation.
+            doc.MailMerge.ExecuteWithRegions(productsView);
+
+            doc.Save(ArtifactsDir + "BaseOperations.ExecuteWithRegions.docx");
+            //ExEnd:ExecuteWithRegionsDataTable
+        }
+
+        //ExStart:ExecuteWithRegionsDataTableMethods
+        private DataTable GetTestSuppliers()
+        {
+            DataTable table = ExecuteDataTable("SELECT CompanyName, ContactName FROM Suppliers");
+            table.TableName = "Suppliers";
+
+            return table;
+        }
+
+        private DataTable GetTestProducts()
+        {
+            DataTable table = ExecuteDataTable("SELECT ProductName, UnitPrice FROM Products ORDER BY ProductName");
+            table.TableName = "Products";
+
+            return table;
+        }
+
+        /// <summary>
+        /// Utility function that creates a connection, command, executes the command and returns the result in a DataTable.
+        /// </summary>
+        private DataTable ExecuteDataTable(string commandText)
+        {
+            string connString = "Data Source=" + DatabaseDir + "Northwind.db";
+
+            using (SqliteConnection conn = new SqliteConnection(connString))
+            {
+                conn.Open();
+
+                SqliteCommand cmd = new SqliteCommand(commandText, conn);
+
+                DataTable table = new DataTable();
+                using (SqliteDataReader reader = cmd.ExecuteReader())
+                    table.Load(reader);
+
+                return table;
+            }
+        }
+        //ExEnd:ExecuteWithRegionsDataTableMethods
+
+        [Test, Category("IgnoreOnJenkins")]
+        public void ProduceMultipleDocuments()
+        {
+            //ExStart:ProduceMultipleDocuments
+            //GistId:341b834e9b6a84ac6885e907e0ea4229
+            string connString = "Data Source=" + DatabaseDir + "Northwind.db";
+
+            Document doc = new Document(MyDir + "Mail merge destination - Suppliers.docx");
+
+            DataTable data = new DataTable();
+            using (SqliteConnection conn = new SqliteConnection(connString))
+            {
+                conn.Open();
+                SqliteCommand cmd = new SqliteCommand("SELECT * FROM Customers", conn);
+                using (SqliteDataReader reader = cmd.ExecuteReader())
+                    data.Load(reader);
+            }
+
+            // Perform a loop through each DataRow to iterate through the DataTable. Clone the template document
+            // instead of loading it from disk for better speed performance before the mail merge operation.
+            // You can load the template document from a file or stream but it is faster to load the document
+            // only once and then clone it in memory before each mail merge operation.
+            
+            int counter = 1;
+            foreach (DataRow row in data.Rows)
+            {
+                Document dstDoc = (Document) doc.Clone(true);
+
+                dstDoc.MailMerge.Execute(row);
+
+                dstDoc.Save(string.Format(ArtifactsDir + "BaseOperations.ProduceMultipleDocuments_{0}.docx", counter++));
+            }
+            //ExEnd:ProduceMultipleDocuments
+        }
+
+        [Test]
+        public void MailMergeWithRegions()
+        {
+            //ExStart:MailMergeWithRegions
+            //GistId:341b834e9b6a84ac6885e907e0ea4229
+            Document doc = new Document();
+            DocumentBuilder builder = new DocumentBuilder(doc);
+
+            // The start point of mail merge with regions the dataset.
+            builder.InsertField(" MERGEFIELD TableStart:Customers");
+            
+            // Data from rows of the "CustomerName" column of the "Customers" table will go in this MERGEFIELD.
+            builder.Write("Orders for ");
+            builder.InsertField(" MERGEFIELD CustomerName");
+            builder.Write(":");
+
+            // Create column headers.
+            builder.StartTable();
+            builder.InsertCell();
+            builder.Write("Item");
+            builder.InsertCell();
+            builder.Write("Quantity");
+            builder.EndRow();
+
+            // We have a second data table called "Orders", which has a many-to-one relationship with "Customers"
+            // picking up rows with the same CustomerID value.
+            builder.InsertCell();
+            builder.InsertField(" MERGEFIELD TableStart:Orders");
+            builder.InsertField(" MERGEFIELD ItemName");
+            builder.InsertCell();
+            builder.InsertField(" MERGEFIELD Quantity");
+            builder.InsertField(" MERGEFIELD TableEnd:Orders");
+            builder.EndTable();
+
+            // The end point of mail merge with regions.
+            builder.InsertField(" MERGEFIELD TableEnd:Customers");
+
+            // Pass our dataset to perform mail merge with regions.
+            DataSet customersAndOrders = CreateDataSet();
+            doc.MailMerge.ExecuteWithRegions(customersAndOrders);
+
+            doc.Save(ArtifactsDir + "BaseOperations.MailMergeWithRegions.docx");
+            //ExEnd:MailMergeWithRegions
+        }
+
+        //ExStart:CreateDataSet
+        //GistId:341b834e9b6a84ac6885e907e0ea4229
+        private DataSet CreateDataSet()
+        {
+            // Create the customers table.
+            DataTable tableCustomers = new DataTable("Customers");
+            tableCustomers.Columns.Add("CustomerID");
+            tableCustomers.Columns.Add("CustomerName");
+            tableCustomers.Rows.Add(new object[] { 1, "John Doe" });
+            tableCustomers.Rows.Add(new object[] { 2, "Jane Doe" });
+
+            // Create the orders table.
+            DataTable tableOrders = new DataTable("Orders");
+            tableOrders.Columns.Add("CustomerID");
+            tableOrders.Columns.Add("ItemName");
+            tableOrders.Columns.Add("Quantity");
+            tableOrders.Rows.Add(new object[] { 1, "Hawaiian", 2 });
+            tableOrders.Rows.Add(new object[] { 2, "Pepperoni", 1 });
+            tableOrders.Rows.Add(new object[] { 2, "Chicago", 1 });
+
+            // Add both tables to a data set.
+            DataSet dataSet = new DataSet();
+            dataSet.Tables.Add(tableCustomers);
+            dataSet.Tables.Add(tableOrders);
+
+            // The "CustomerID" column, also the primary key of the customers table is the foreign key for the Orders table.
+            dataSet.Relations.Add(tableCustomers.Columns["CustomerID"], tableOrders.Columns["CustomerID"]);
+
+            return dataSet;
+        }
+        //ExEnd:CreateDataSet
+
+        [Test]
+        public void GetRegionsByName()
+        {
+            //ExStart:GetRegionsByName
+            //GistId:b4bab1bf22437a86d8062e91cf154494
+            Document doc = new Document(MyDir + "Mail merge regions.docx");
+
+            //ExStart:GetRegionsHierarchy
+            //GistId:b4bab1bf22437a86d8062e91cf154494
+            MailMergeRegionInfo regionInfo = doc.MailMerge.GetRegionsHierarchy();
+            //ExEnd:GetRegionsHierarchy
+
+            IList<MailMergeRegionInfo> regions = doc.MailMerge.GetRegionsByName("Region1");
+            Assert.That(doc.MailMerge.GetRegionsByName("Region1").Count, Is.EqualTo(1));
+            foreach (MailMergeRegionInfo region in regions) Assert.That(region.Name, Is.EqualTo("Region1"));
+
+            regions = doc.MailMerge.GetRegionsByName("Region2");
+            Assert.That(doc.MailMerge.GetRegionsByName("Region2").Count, Is.EqualTo(1));
+            foreach (MailMergeRegionInfo region in regions) Assert.That(region.Name, Is.EqualTo("Region2"));
+
+            regions = doc.MailMerge.GetRegionsByName("NestedRegion1");
+            Assert.That(doc.MailMerge.GetRegionsByName("NestedRegion1").Count, Is.EqualTo(2));
+            foreach (MailMergeRegionInfo region in regions) Assert.That(region.Name, Is.EqualTo("NestedRegion1"));
+            //ExEnd:GetRegionsByName
+        }
+    }
+}
